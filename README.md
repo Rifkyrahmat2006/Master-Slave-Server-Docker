@@ -3,7 +3,7 @@ Remote server menggunakan program C ke server mongodb dengan konfigurasi master 
 
 ## 1. Siapkan Resources:
 * Windows (10/11) sebagai Host
-* Virtual Box
+* [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
 * ISO Ubuntu Server sebagai Primary
 * ISO Ubuntu Server sebagai Secondary
 * [MSYS2](https://github.com/msys2/msys2-installer/releases/download/2025-02-21/msys2-x86_64-20250221.exe)
