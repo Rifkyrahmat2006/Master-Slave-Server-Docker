@@ -11,7 +11,7 @@ Remote server menggunakan program C ke server mongodb dengan konfigurasi master 
 * [Mongo C Driver](https://github.com/mongodb/mongo-c-driver/releases/download/2.0.1/mongo-c-driver-2.0.1.tar.gz)
 
 ## 2. Instalasi
-### Ubuntu Server
+### 1. Ubuntu Server
 
 Untuk OS Linux yang support: 
 - Ubuntu Server Oracular 24.10
@@ -20,8 +20,8 @@ Untuk OS Linux yang support:
 
 Gunakan Ubuntu Server Jammy 22.04 (LTS). Setup menggunakan VirtualBox dengan konfigurasi jaringan ter-Bridge
 
-### Install MSYS2 MINGW64 (dengan GCC 15.1.0).
-### Install Mongo C Driver
+### 2. Install MSYS2 MINGW64 (dengan GCC 15.1.0).
+### 3. Install Mongo C Driver
 Unduh dan Ekstrak Source Code MongoDB C Driver:
 - Ekstrak ke direktori di Windows, misalnya C:\mongo-c-driver-2.0.1.
 - Buka MSYS2 MINGW64 Shell di Windows Anda.
