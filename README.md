@@ -149,7 +149,7 @@ cd /c/Users/rifky/Documents/ProyekMongoReplicaSet
 ```
 2. Clone Repo Ini
 ```
-git clone 
+git clone https://github.com/Rifkyrahmat2006/Master-Slave-Server.git
 ```
 ## 8. Mengkompilasi Program C
 1. Pastikan Anda Masih Berada di Direktori Proyek. Contoh:
