@@ -86,7 +86,7 @@ hostname -I
 ### Di Sever Linux Primary/Master
 Jalankan Kontainer mongo_primary
 ```
-docker run -d \
+sudo docker run -d \
   --name mongo_primary \
   -p GANTI_IP_PRIMARY/MASTER:27017:27017 \
   -v mongo_primary_data:/data/db \
@@ -98,7 +98,7 @@ docker run -d \
 ### Di Server Linux 2 Secondary/Slave
 Jalankan Kontainer mongo_secondary
 ```
-docker run -d \
+sudo docker run -d \
   --name mongo_secondary \
   -p GANTI_IP_SECONDARY/SLAVE:27017:27017 \
   -v mongo_secondary_data:/data/db \
@@ -109,7 +109,7 @@ docker run -d \
 
 Verifikasi: Di kedua server, jalankan 
 ```
-docker ps
+sudo docker ps
 ``` 
 untuk memastikan kontainer `mongo_primary` dan `mongo_secondary` berjalan.
 
@@ -117,7 +117,7 @@ untuk memastikan kontainer `mongo_primary` dan `mongo_secondary` berjalan.
 Langkah ini dilakukan 'HANYA' dari Server Linux 1 (Primary/Master).
 1. Masuk ke Shell MongoDB di mongo_primary:
 ```
-docker exec -it mongo_primary mongo
+sudo docker exec -it mongo_primary mongo
 ```
 2. Inisiasi Replica Set:
 Di dalam shell mongo, jalankan perintah berikut menggunakan IP Address Anda:
@@ -186,7 +186,7 @@ cp /mingw64/bin/zlib1.dll .
 ## 11. Memverifikasi Data di MongoDB Replica Set
 1. Hubungkan ke PRIMARY MongoDB: Di terminal Server Linux PRIMARY/MASTER:
 ```
-docker exec -it mongo_primary mongo
+sudo docker exec -it mongo_primary mongo
 ```
 2. Periksa Data: Di dalam shell mongo:
 ```
