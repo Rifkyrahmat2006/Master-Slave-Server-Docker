@@ -111,7 +111,7 @@ Verifikasi: Di kedua server, jalankan
 ```
 docker ps
 ``` 
-untuk memastikan kontainer 'mongo_primary' dan 'mongo_secondary' berjalan.
+untuk memastikan kontainer `mongo_primary` dan `mongo_secondary` berjalan.
 
 ## 6. Inisiasi Replica Set
 Langkah ini dilakukan 'HANYA' dari Server Linux 1 (Primary/Master).
@@ -132,14 +132,14 @@ rs.initiate(
   }
 )
 ```
-Tunggu hingga prompt berubah menjadi 'rs0:PRIMARY>'.
+Tunggu hingga prompt berubah menjadi `rs0:PRIMARY>`.
 
 3. Verifikasi Status:
 Masih di shell mongo pada mongo_primary:
 ```
 rs.status()
 ```
-Pastikan kedua anggota (IP_PRIMARY/MASTER:27017 dan IP_SECONDARY/SLAVE:27017) muncul, satu sebagai PRIMARY dan satu lagi sebagai SECONDARY, keduanya dengan health: 1.
+Pastikan kedua anggota (IP_PRIMARY/MASTER:27017 dan IP_SECONDARY/SLAVE:27017) muncul, satu sebagai PRIMARY dan satu lagi sebagai SECONDARY, keduanya dengan `health: 1`.
 
 ## 7. Menyiapkan Proyek Program C di Windows
 1. Buat dan Masuk ke Direktori Proyek Baru(Anda bisa menggunakan direktori lainnya):
@@ -163,7 +163,7 @@ gcc kirim_data_final.c -o kirim_data_final.exe \
     -lmongoc2 -lbson2 \
     -lws2_32 -lsecur32 -lcrypt32 -lbcrypt -ldnsapi -lzstd
 ```
-Jika berhasil, 'kirim_data_final.exe' akan dibuat.
+Jika berhasil, `kirim_data_final.exe` akan dibuat.
 
 ## 9. Menyiapkan File DLL yang Diperlukan
 Pastikan anda masih di direktori yang sama (/c/Users/rifky/Documents/ProyekMongoReplicaSet) 
@@ -193,7 +193,7 @@ docker exec -it mongo_primary mongo
 use NAMA_DATABASE_ANDA; // Ganti dengan nama database yang Anda gunakan di C
 db.NAMA_COLLECTION_ANDA.find().pretty(); // Ganti dengan nama collection
 ```
-Anda seharusnya melihat data baru. Anda juga bisa terhubung ke SECONDARY/SLAVE (Server Linux 2, kontainer mongo_secondary) jalankan 'rs.slaveOk()', lalu periksa datanya menggunakan perintah diatas untuk melihat replikasi.
+Anda seharusnya melihat data baru. Anda juga bisa terhubung ke SECONDARY/SLAVE (Server Linux 2, kontainer mongo_secondary) jalankan `rs.slaveOk()`, lalu periksa datanya menggunakan perintah diatas untuk melihat replikasi.
 
 
 
