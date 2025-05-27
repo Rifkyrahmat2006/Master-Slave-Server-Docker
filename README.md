@@ -13,12 +13,11 @@ Remote server menggunakan program C ke server mongodb dengan konfigurasi master 
 ## 2. Instalasi
 ### 1. Ubuntu Server
 
-Untuk OS Linux yang support: 
-- Ubuntu Server Oracular 24.10
-- Ubuntu Server Noble 24.04 (LTS)
-- Ubuntu Server Jammy 22.04 (LTS)
+Untuk OS Linux yang support docker: 
+- [Ubuntu Server Noble 24.04 (LTS)](https://ubuntu.com/download/server/thank-you?version=24.04.2&architecture=amd64&lts=true)
+- [Ubuntu Server Jammy 22.04 (LTS)](https://ubuntu.com/download/server/thank-you?version=22.04.5&architecture=amd64&lts=true)
 
-Gunakan Ubuntu Server Jammy 22.04 (LTS). Setup menggunakan VirtualBox dengan konfigurasi jaringan ter-Bridge
+Disini saya gunakan Ubuntu Server Jammy 22.04 (LTS). Setup menggunakan VirtualBox dengan konfigurasi jaringan ter-Bridge
 
 ### 2. Install MSYS2 MINGW64 (dengan GCC 15.1.0).
 ### 3. Install Mongo C Driver
