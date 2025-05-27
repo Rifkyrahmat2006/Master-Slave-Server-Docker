@@ -5,9 +5,8 @@ Remote server menggunakan program C ke server mongodb dengan konfigurasi master 
 - Windows (10/11) sebagai Host
 - Ubuntu Server sebagai Primary
 - Ubuntu Server sebagai Secondary
-- MSYS2
-- Mongo C Driver
-  https://github.com/mongodb/mongo-c-driver/releases/download/2.0.1/mongo-c-driver-2.0.1.tar.gz
+* [MSYS2](https://github.com/msys2/msys2-installer/releases/download/2025-02-21/msys2-x86_64-20250221.exe)
+* [Mongo C Driver](https://github.com/mongodb/mongo-c-driver/releases/download/2.0.1/mongo-c-driver-2.0.1.tar.gz)
 - 
 
 Untuk OS Linux yang support: 
