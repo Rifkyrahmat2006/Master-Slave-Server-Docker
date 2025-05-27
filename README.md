@@ -47,7 +47,102 @@ Instal Driver:
 ```
 mingw32-make install
 ```
-## Menyiapkan Proyek Program C di Windows
+
+## 3. Install Docker pada masing-masing Ubuntu
+### 1. Set up Docker's apt repository.
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+### 2. Install the Docker packages.
+```
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+### 3. Verify that the installation is successful by running the hello-world image:
+```
+sudo docker run hello-world
+```
+This command downloads a test image and runs it in a container. When the container runs, it prints a confirmation message and exits.
+
+## 4. Install Mongo 4.4 pada masing-masing Ubuntu
+```
+sudo docker pull mongo:4.4
+```
+## 5. Menjalankan Kontainer MongoDB untuk Replica Set
+Lihat IP Address dari masing-masing server:
+```
+hostname -I
+```
+### Di Sever Linux Primary/Master
+Jalankan Kontainer mongo_primary
+```
+docker run -d \
+  --name mongo_primary \
+  -p GANTI_IP_PRIMARY/MASTER:27017:27017 \
+  -v mongo_primary_data:/data/db \
+  mongo:4.4 \
+  --replSet "rs0" --bind_ip_all
+```
+(GANTI_IP_PRIMARY/MASTER dengan IP Address server)
+
+### Di Server Linux 2 Secondary/Slave
+Jalankan Kontainer mongo_secondary
+```
+docker run -d \
+  --name mongo_secondary \
+  -p GANTI_IP_SECONDARY/SLAVE:27017:27017 \
+  -v mongo_secondary_data:/data/db \
+  mongo:4.4 \
+  --replSet "rs0" --bind_ip_all
+```
+(GANTI_IP_SECONDARY/SLAVE dengan IP Address server)
+
+Verifikasi: Di kedua server, jalankan 
+```
+docker ps
+``` 
+untuk memastikan kontainer 'mongo_primary' dan 'mongo_secondary' berjalan.
+
+## 6. Inisiasi Replica Set
+Langkah ini dilakukan 'HANYA' dari Server Linux 1 (Primary/Master).
+1. Masuk ke Shell MongoDB di mongo_primary:
+```
+docker exec -it mongo_primary mongo
+```
+2. Inisiasi Replica Set:
+Di dalam shell mongo, jalankan perintah berikut menggunakan IP Address Anda:
+```
+rs.initiate(
+  {
+    _id: "rs0",
+    members: [
+      { _id: 0, host: "GANTI_IP_PRIMARY/MASTER" },
+      { _id: 1, host: "GANTI_IP_SECONDARY/SLAVE" }
+    ]
+  }
+)
+```
+Tunggu hingga prompt berubah menjadi 'rs0:PRIMARY>'.
+
+3. Verifikasi Status:
+Masih di shell mongo pada mongo_primary:
+```
+rs.status()
+```
+Pastikan kedua anggota (IP_PRIMARY/MASTER:27017 dan IP_SECONDARY/SLAVE:27017) muncul, satu sebagai PRIMARY dan satu lagi sebagai SECONDARY, keduanya dengan health: 1.
+
+## 7. Menyiapkan Proyek Program C di Windows
 1. Buat dan Masuk ke Direktori Proyek Baru(Anda bisa menggunakan direktori lainnya):
 Buka MSYS2 MINGW64 Shell dan masuk. Contoh:
 ```
@@ -57,7 +152,7 @@ cd /c/Users/rifky/Documents/ProyekMongoReplicaSet
 ```
 git clone 
 ```
-## Mengkompilasi Program C
+## 8. Mengkompilasi Program C
 1. Pastikan Anda Masih Berada di Direktori Proyek. Contoh:
 (/c/Users/rifky/Documents/ProyekMongoReplicaSet) di MSYS2 MINGW64 shell.
 2. Jalankan Perintah Kompilasi GCC:
@@ -71,7 +166,7 @@ gcc kirim_data_final.c -o kirim_data_final.exe \
 ```
 Jika berhasil, 'kirim_data_final.exe' akan dibuat.
 
-## Menyiapkan File DLL yang Diperlukan
+## 9. Menyiapkan File DLL yang Diperlukan
 Pastikan anda masih di direktori yang sama (/c/Users/rifky/Documents/ProyekMongoReplicaSet) 
 ```
 # Cek nama file DLL yang benar di /c/mongodb_c_driver/bin/
@@ -81,9 +176,25 @@ cp /c/mongodb_c_driver/bin/libbson2.dll .
 cp /mingw64/bin/libzstd.dll .
 cp /mingw64/bin/zlib1.dll .
 ```
+## 10. Menjalankan Program C di Windows
+1. Pastikan Replica Set MongoDB Anda Berjalan dan sehat.
+2. Jalankan Program dari MSYS2 MINGW64 Shell: Di direktori tempat anda meng-clone repo ini
+```
+./kirim_data_replset.exe data_input_replset.json
+```
+3. Periksa Output Program: Anda akan melihat pesan koneksi dan (semoga) pesan sukses.
 
-
-
+## 11. Memverifikasi Data di MongoDB Replica Set
+1. Hubungkan ke PRIMARY MongoDB: Di terminal Server Linux PRIMARY/MASTER:
+```
+docker exec -it mongo_primary mongo
+```
+2. Periksa Data: Di dalam shell mongo:
+```
+use NAMA_DATABASE_ANDA; // Ganti dengan nama database yang Anda gunakan di C
+db.NAMA_COLLECTION_ANDA.find().pretty(); // Ganti dengan nama collection
+```
+Anda seharusnya melihat data baru. Anda juga bisa terhubung ke SECONDARY/SLAVE (Server Linux 2, kontainer mongo_secondary) jalankan 'rs.slaveOk()', lalu periksa datanya menggunakan perintah diatas untuk melihat replikasi.
 
 
 
